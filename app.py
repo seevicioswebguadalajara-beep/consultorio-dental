@@ -26,8 +26,8 @@ def login_required(f):
 # ==========================================
 # 2. CONFIGURACIÓN DE CLAVE Y PROMPT DEL CHATBOT
 # ==========================================
-# Se lee la clave de API desde las variables de entorno de Render
-API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+# Lee la clave de forma segura desde las variables de entorno de Render
+API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 
 SYSTEM_INSTRUCTION = """
 Eres la Recepcionista Virtual del consultorio del Dr. José Joel Arreola Rangel en Guadalajara, Jalisco.
@@ -45,7 +45,7 @@ REGLAS ESTRICTAS DE RESPUESTA:
    - Horarios: Lunes a Viernes de 9:00 AM a 8:00 PM y Sábados de 9:00 AM a 2:00 PM.
 
 3. CANALIZACIÓN INMEDIATA (Cierre obligatorio):
-   - Cada respuesta debe ser MÁXIMO de 2 a 3 oraciones muy cortas.
+   - Da respuestas directas, breves y COMPLETAS (de 2 a 4 oraciones). NUNCA dejes oraciones incompletas o cortadas.
    - Finaliza siempre indicando: "Para agendar su cita de valoración o atención inmediata, por favor presione el botón verde de WhatsApp."
 """
 
@@ -115,12 +115,12 @@ def agendar():
 
     return redirect(f'/?exito=1&paciente={nombre}#formulario')
 
-# ENDPOINT DEL CHATBOT
+# ENDPOINT DEL CHATBOT - MODELO GEMINI 1.5 FLASH
 @app.route("/chat", methods=["POST"])
 def chat():
     user_message = request.json.get("message", "")
     
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
     
     headers = {
         "Content-Type": "application/json",
@@ -130,21 +130,28 @@ def chat():
     payload = {
         "contents": [{
             "parts": [{"text": f"{SYSTEM_INSTRUCTION}\n\nCliente dice: {user_message}"}]
-        }]
+        }],
+        "generationConfig": {
+            "maxOutputTokens": 300,
+            "temperature": 0.2
+        }
     }
     
     try:
-        response = requests.post(url, json=payload, headers=headers)
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
         data = response.json()
         
         if "candidates" in data and len(data["candidates"]) > 0:
             bot_response = data["candidates"][0]["content"]["parts"][0]["text"]
+            return jsonify({"response": bot_response})
         else:
-            bot_response = "Ofrecemos una disculpa por el inconveniente. Le invitamos a presionar el botón verde de WhatsApp para brindarle atención inmediata con el doctor."
+            bot_response = "En este momento no puedo procesar su solicitud. Por favor, intente de nuevo o presione el botón de WhatsApp."
+            
     except Exception as e:
-        bot_response = "Una disculpa, en este momento la red es inestable. Por favor presione el botón de WhatsApp para comunicarse directamente al consultorio."
+        bot_response = "Ocurrió un inconveniente temporal con el servidor del chat. Por favor, contáctenos vía WhatsApp."
         
     return jsonify({"response": bot_response})
+
 
 # ==========================================
 # 5. RUTAS DE ADMINISTRACIÓN Y SEGURIDAD
