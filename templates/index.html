@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultorio Dental | Dr. José Joel Arreola Rangel · Guadalajara</title>
+
+    <!-- Configuración para App Móvil -->
+    <meta name="apple-mobile-web-app-title" content="Consultorio Dental">
+    <meta name="application-name" content="Consultorio Dental">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0b2545">
+
+    <!-- Tipografías e iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --navy: #0b2545;
+            --navy-2: #13315c;
+            --gold: #b08d57;
+            --gold-soft: #e9dfcc;
+            --ink: #1f2937;
+            --muted: #5b6676;
+            --line: #e3e0d8;
+            --bg: #f7f6f2;
+            --white: #ffffff;
+            --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+            --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--ink); display: flex; flex-direction: column; min-height: 100vh; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        /* Barra superior */
+        .social-bar { background: var(--navy); color: #cbd5e1; padding: 9px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; letter-spacing: .3px; }
+        .social-bar i { color: var(--gold); margin-right: 6px; }
+        .social-links a { color: #cbd5e1; margin-left: 16px; text-decoration: none; font-size: 14px; transition: color .2s; }
+        .social-links a:hover { color: var(--gold); }
+
+        /* Encabezado principal */
+        .hero {
+            background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+            color: #fff; text-align: center; padding: 64px 24px 96px;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero .eyebrow { display: inline-block; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
+        .hero h1 { font-family: var(--serif); font-size: 40px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: .3px; }
+        .hero .divider { width: 56px; height: 2px; background: var(--gold); margin: 0 auto 18px; }
+        .hero p { font-size: 15.5px; color: #d6deea; max-width: 560px; margin: 0 auto 30px; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .btn { display: inline-block; padding: 13px 28px; font-size: 13.5px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; text-decoration: none; border-radius: 4px; transition: all .2s; }
+        .btn-gold { background: var(--gold); color: #fff; border: 1px solid var(--gold); }
+        .btn-gold:hover { background: #9a7a47; border-color: #9a7a47; }
+        .btn-ghost { color: #fff; border: 1px solid rgba(255,255,255,.45); }
+        .btn-ghost:hover { background: rgba(255,255,255,.1); }
+
+        /* Contenedor */
+        .container { max-width: 1040px; margin: -48px auto 56px; padding: 0 20px; flex: 1; width: 100%; }
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+
+        /* Tarjetas */
+        .card { background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 32px 26px; box-shadow: 0 2px 4px rgba(11,37,69,.04), 0 12px 28px rgba(11,37,69,.06); }
+        .card h2 { font-family: var(--serif); color: var(--navy); font-size: 25px; font-weight: 700; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; position: relative; }
+        .card h2::after { content: ''; position: absolute; left: 0; bottom: -1px; width: 48px; height: 2px; background: var(--gold); }
+        .card h2 i { color: var(--gold); font-size: 18px; }
+
+        /* Doctor */
+        .doctor-profile { display: flex; flex-direction: column; gap: 26px; align-items: center; }
+        .doctor-img { width: 190px; height: 190px; border-radius: 6px; object-fit: cover; object-position: center top; border: 1px solid var(--line); outline: 6px solid var(--gold-soft); outline-offset: -1px; flex-shrink: 0; }
+        .doctor-info { text-align: center; }
+        .doctor-info h3 { font-family: var(--serif); font-size: 28px; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 6px; }
+        .doctor-info .sub { font-size: 12.5px; color: var(--gold); font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px; display: block; }
+        .doctor-info p { font-size: 14.5px; color: var(--muted); margin-bottom: 18px; }
+        .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .badge { background: var(--bg); border: 1px solid var(--line); color: var(--navy); font-size: 12px; padding: 7px 13px; border-radius: 3px; font-weight: 600; }
+        .badge i { color: var(--gold); margin-right: 5px; }
+
+        /* Títulos */
+        .cert-container { display: flex; flex-direction: column; gap: 26px; align-items: center; }
+        .cert-img { width: 100%; max-width: 380px; border-radius: 4px; border: 1px solid var(--line); padding: 8px; background: #fff; box-shadow: 0 6px 18px rgba(11,37,69,.08); }
+        .cert-text { flex: 1; }
+        .cert-text h3 { font-family: var(--serif); font-size: 22px; color: var(--navy); margin-bottom: 10px; }
+        .cert-text p { font-size: 14.5px; color: var(--muted); margin-bottom: 16px; }
+        .cert-text ul { list-style: none; font-size: 14.5px; color: var(--ink); }
+        .cert-text li { margin-bottom: 10px; padding-left: 26px; position: relative; }
+        .cert-text li i { color: var(--gold); position: absolute; left: 0; top: 4px; }
+
+        /* Caso */
+        .section-intro { font-size: 14.5px; color: var(--muted); margin-bottom: 20px; }
+        .caso-card { background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 22px; text-align: center; }
+        .caso-img { width: 100%; max-width: 460px; border-radius: 3px; margin-bottom: 16px; border: 1px solid var(--line); }
+        .caso-card h3 { font-family: var(--serif); font-size: 21px; color: var(--navy); margin-bottom: 6px; }
+        .caso-card p { font-size: 13.5px; color: var(--muted); max-width: 520px; margin: 0 auto; }
+
+        /* Galería */
+        .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+        .foto-card { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--line); transition: transform .25s, box-shadow .25s; }
+        .foto-card:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(11,37,69,.12); }
+        .foto-card img { width: 100%; height: 170px; object-fit: cover; display: block; }
+        .foto-card span { display: block; padding: 12px; font-size: 12.5px; font-weight: 600; color: var(--navy); text-align: center; letter-spacing: .6px; text-transform: uppercase; border-top: 2px solid var(--gold); }
+
+        /* Formulario */
+        .form-box { background: var(--white); border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 6px; padding: 34px 26px; box-shadow: 0 2px 4px rgba(11,37,69,.04), 0 12px 28px rgba(11,37,69,.06); }
+        .form-box h2 { font-family: var(--serif); color: var(--navy); font-size: 25px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+        .form-box h2 i { color: var(--gold); font-size: 18px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { font-size: 11.5px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 7px; }
+        .input-custom { width: 100%; padding: 13px 14px; border: 1px solid #cfd4db; border-radius: 4px; font-size: 14.5px; font-family: var(--sans); color: var(--ink); background: #fff; transition: border-color .2s, box-shadow .2s; outline: none; }
+        .input-custom:focus { border-color: var(--navy-2); box-shadow: 0 0 0 3px rgba(19,49,92,.12); }
+        .btn-solicitar { width: 100%; background: var(--navy); color: #fff; border: none; padding: 15px; font-size: 13.5px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: background .2s; font-family: var(--sans); }
+        .btn-solicitar:hover { background: var(--navy-2); }
+        .btn-solicitar:active { transform: scale(.99); }
+        .alert-exito { background: #eef6f0; border: 1px solid #b7d8c0; border-left: 4px solid #2f7d4a; color: #1f5a35; padding: 16px 18px; border-radius: 4px; margin-bottom: 20px; font-size: 14px; line-height: 1.5; }
+        .alert-exito i { margin-right: 6px; }
+        .alert-error { background: #fbeeee; border: 1px solid #e8bcbc; border-left: 4px solid #b42323; color: #7f1d1d; }
+
+        /* Mapa */
+        .map-container { width: 100%; height: 250px; border-radius: 4px; overflow: hidden; border: 1px solid var(--line); margin-top: 6px; }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
+
+        /* Horarios */
+        .horarios-list { list-style: none; }
+        .horarios-list li { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+        .horarios-list li:last-child { border-bottom: none; }
+        .dia { font-weight: 500; color: var(--ink); }
+        .hora { color: var(--navy); font-weight: 600; }
+        .cerrado { color: #9a3b3b; font-weight: 600; }
+
+        /* Testimonios */
+        .testimonios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+        .testimonio-card { background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 4px; padding: 20px; }
+        .stars { color: var(--gold); margin-bottom: 10px; font-size: 13px; letter-spacing: 2px; }
+        .testimonio-card p { font-family: var(--serif); font-size: 17px; color: var(--ink); line-height: 1.45; margin-bottom: 12px; }
+        .paciente-nombre { font-size: 12px; font-weight: 600; color: var(--navy); letter-spacing: .5px; text-transform: uppercase; display: block; }
+
+        /* Chat */
+        #chat-widget { position: fixed; bottom: 82px; right: 20px; z-index: 1000; }
+        .bot-card-widget { display: inline-flex; align-items: center; gap: 12px; background: #fff; padding: 9px 18px 9px 10px; border-radius: 50px; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(11,37,69,.18); cursor: pointer; transition: transform .2s, box-shadow .2s; }
+        .bot-card-widget:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(11,37,69,.24); }
+        .bot-card-avatar { width: 40px; height: 40px; background: var(--navy); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 17px; position: relative; }
+        .status-dot { position: absolute; bottom: 0; right: 0; width: 11px; height: 11px; background: #2f9e5b; border: 2px solid #fff; border-radius: 50%; }
+        .bot-card-text { display: flex; flex-direction: column; text-align: left; line-height: 1.3; }
+        .bot-card-text strong { font-size: 13px; color: var(--navy); font-weight: 600; }
+        .bot-card-text span { font-size: 11.5px; color: var(--muted); }
+
+        #chat-box { display: none; width: 330px; max-width: calc(100vw - 32px); height: 430px; background: #fff; border-radius: 8px; box-shadow: 0 16px 40px rgba(11,37,69,.25); flex-direction: column; overflow: hidden; position: fixed; bottom: 150px; right: 20px; z-index: 1000; border: 1px solid var(--line); }
+        #chat-header { background: var(--navy); color: #fff; padding: 14px 18px; font-weight: 600; font-size: 13.5px; letter-spacing: .3px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); }
+        #chat-header i { color: var(--gold); margin-right: 6px; }
+        #chat-messages { flex: 1; padding: 14px; overflow-y: auto; background: var(--bg); font-size: 13px; }
+        .msg { margin-bottom: 10px; padding: 10px 14px; border-radius: 8px; max-width: 85%; line-height: 1.45; }
+        .msg-user { background: var(--navy); color: #fff; margin-left: auto; border-bottom-right-radius: 2px; }
+        .msg-bot { background: #fff; border: 1px solid var(--line); color: var(--ink); margin-right: auto; border-bottom-left-radius: 2px; }
+        #chat-input-area { display: flex; border-top: 1px solid var(--line); background: #fff; }
+        #chat-input-area input { border: none; padding: 13px; flex: 1; outline: none; font-size: 13px; font-family: var(--sans); }
+        #chat-input-area button { border: none; background: var(--gold); color: #fff; padding: 0 18px; font-weight: 600; font-size: 12.5px; letter-spacing: .5px; text-transform: uppercase; cursor: pointer; }
+        #chat-input-area button:hover { background: #9a7a47; }
+
+        /* Footer */
+        footer { background: var(--navy); color: #a9b6c9; text-align: center; padding: 38px 20px 100px; font-size: 13px; border-top: 3px solid var(--gold); }
+        footer p { margin-bottom: 8px; }
+        footer strong { font-family: var(--serif); font-size: 21px; font-weight: 600; color: #fff; letter-spacing: .5px; }
+
+        /* WhatsApp */
+        .btn-whatsapp { position: fixed; bottom: 20px; right: 20px; background: #1f8a4c; color: #fff; border-radius: 50px; padding: 13px 22px; font-weight: 600; font-size: 13.5px; text-decoration: none; box-shadow: 0 8px 22px rgba(31,138,76,.35); display: flex; align-items: center; gap: 10px; z-index: 1000; transition: transform .2s, background .2s; }
+        .btn-whatsapp:hover { background: #197340; }
+        .btn-whatsapp:active { transform: scale(.96); }
+
+        @media (min-width: 768px) {
+            .hero { padding: 84px 24px 110px; }
+            .hero h1 { font-size: 54px; }
+            .hero p { font-size: 17px; }
+            .main-grid { grid-template-columns: 1fr 1fr; }
+            .full-width { grid-column: 1 / -1; }
+            .card { padding: 38px 36px; }
+            .doctor-profile { flex-direction: row; align-items: flex-start; }
+            .doctor-img { width: 220px; height: 260px; }
+            .doctor-info { text-align: left; }
+            .badges { justify-content: flex-start; }
+            .cert-container { flex-direction: row; align-items: flex-start; }
+            footer { padding-bottom: 38px; }
+        }
+        @media (max-width: 480px) {
+            .social-bar span { font-size: 11.5px; }
+            .btn-whatsapp span { display: none; }
+            .btn-whatsapp { padding: 15px 17px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <div class="social-bar">
+        <span><i class="fas fa-location-dot"></i> Guadalajara, Jalisco</span>
+        <div class="social-links">
+            <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://maps.google.com" target="_blank" title="Google Maps"><i class="fas fa-location-dot"></i></a>
+        </div>
+    </div>
+
+    <!-- Encabezado -->
+    <div class="hero">
+        <span class="eyebrow">Odontología profesional</span>
+        <h1>Consultorio Dental</h1>
+        <div class="divider"></div>
+        <p>Cuidamos tu sonrisa con atención profesional, ética y tecnología moderna.</p>
+        <div class="hero-actions">
+            <a href="#formulario" class="btn btn-gold">Solicitar cita</a>
+            <a href="https://wa.me/523300000000?text=Hola,%20quisiera%20pedir%20informes%20o%20agendar%20una%20cita" target="_blank" class="btn btn-ghost">Escribir por WhatsApp</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+
+            <!-- Quiénes Somos -->
+            <div class="card full-width">
+                <h2><i class="fas fa-user-doctor"></i> Especialista al cuidado de tu salud</h2>
+                <div class="doctor-profile">
+                    <img src="{{ url_for('static', filename='img/doctor.jpg') }}" alt="Dr. José Joel Arreola" class="doctor-img">
+                    <div class="doctor-info">
+                        <h3>Dr. José Joel Arreola Rangel</h3>
+                        <span class="sub">Cirujano Dentista · Céd. Prof. 1234567</span>
+                        <p>Apasionado por la odontología moderna y la actualización constante. Con amplia experiencia y formación especializada, nuestro objetivo es brindarte un tratamiento cómodo, honesto y de alta precisión en un ambiente profesional.</p>
+                        <div class="badges">
+                            <span class="badge"><i class="fas fa-certificate"></i> Actualización continua</span>
+                            <span class="badge"><i class="fas fa-award"></i> Licenciado en Cirugía Dental</span>
+                            <span class="badge"><i class="fas fa-shield-halved"></i> Garantía de higiene</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Títulos -->
+            <div class="card full-width">
+                <h2><i class="fas fa-graduation-cap"></i> Respaldados por títulos y certificaciones</h2>
+                <div class="cert-container">
+                    <img src="{{ url_for('static', filename='img/titulos.jpg') }}" alt="Entrega de Títulos Dental" class="cert-img">
+                    <div class="cert-text">
+                        <h3>Compromiso y formación oficial</h3>
+                        <p>En nuestro consultorio contamos con el aval académico oficial para garantizar que cada tratamiento sea realizado con el más alto estándar de calidad, seguridad e higiene.</p>
+                        <ul>
+                            <li><i class="fas fa-circle-check"></i> Títulos profesionales expedidos legalmente.</li>
+                            <li><i class="fas fa-circle-check"></i> Capacitación continua en nuevas tecnologías estéticas.</li>
+                            <li><i class="fas fa-circle-check"></i> Protocolos estrictos de esterilización.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caso de Éxito -->
+            <div class="card full-width">
+                <h2><i class="fas fa-wand-magic-sparkles"></i> Casos de éxito: antes y después</h2>
+                <p class="section-intro">Conoce el cambio real que logramos en la sonrisa y estética de nuestros pacientes.</p>
+                <div class="caso-card">
+                    <img src="{{ url_for('static', filename='img/antes_despues.jpg') }}" alt="Diseño de Sonrisa Antes y Después" class="caso-img">
+                    <h3>Diseño y rehabilitación estética dental</h3>
+                    <p>Alineación, corrección de espacio y armonización completa para devolver la confianza al sonreír.</p>
+                </div>
+            </div>
+
+            <!-- Galería -->
+            <div class="card full-width">
+                <h2><i class="fas fa-clinic-medical"></i> Nuestras instalaciones</h2>
+                <div class="galeria">
+                    <div class="foto-card">
+                        <img src="{{ url_for('static', filename='img/instalacion1.jpg') }}" alt="Atención Odontológica">
+                        <span>Atención odontológica</span>
+                    </div>
+                    <div class="foto-card">
+                        <img src="{{ url_for('static', filename='img/instalacion2.jpg') }}" alt="Equipo Moderno">
+                        <span>Equipo moderno</span>
+                    </div>
+                    <div class="foto-card">
+                        <img src="{{ url_for('static', filename='img/instalacion3.jpg') }}" alt="Diagnóstico Integral">
+                        <span>Diagnóstico integral</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div class="form-box full-width" id="formulario">
+                <h2><i class="fas fa-calendar-check"></i> Solicitar informes o cita</h2>
+
+                {% if exito == '1' %}
+                <div class="alert-exito">
+                    <i class="fas fa-circle-check"></i>
+                    <strong>Gracias{% if paciente %}, {{ paciente }}{% endif %}.</strong>
+                    Hemos recibido tus datos correctamente. En breve nos comunicaremos contigo para agendar tu consulta.
+                </div>
+                {% elif exito == '0' %}
+                <div class="alert-exito alert-error">
+                    <i class="fas fa-circle-xmark"></i>
+                    Por favor ingresa un número de teléfono válido a 10 dígitos.
+                </div>
+                {% endif %}
+
+                <p class="section-intro">Déjanos tus datos y nos comunicaremos contigo para coordinar tu horario.</p>
+
+                <form method="POST" action="/agendar">
+                    <div class="form-group">
+                        <label>Nombre completo</label>
+                        <input type="text" name="paciente" class="input-custom" placeholder="Ej. Ana Martínez" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Servicio de interés</label>
+                        <select name="servicio" class="input-custom">
+                            <option value="Limpieza Dental">Limpieza Dental</option>
+                            <option value="Valoración General">Valoración General / Diagnóstico</option>
+                            <option value="Ortodoncia">Ortodoncia / Brackets</option>
+                            <option value="Blanqueamiento">Blanqueamiento Dental</option>
+                            <option value="Diseño de Sonrisa">Diseño de Sonrisa / Carillas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Teléfono / WhatsApp</label>
+                        <input type="tel" name="telefono" class="input-custom" placeholder="33 0000 0000" required>
+                    </div>
+
+                    <button type="submit" class="btn-solicitar">Solicitar contacto</button>
+                </form>
+            </div>
+
+            <!-- Mapa -->
+            <div class="card">
+                <h2><i class="fas fa-map-location-dot"></i> Nuestra ubicación</h2>
+                <p class="section-intro" style="margin-bottom:12px;">Visítanos en nuestra ubicación céntrica en Guadalajara, Jalisco.</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14930.596009875412!2d-103.3522!3d20.6767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b18f97204481%3A0xb35a0fcf64560d26!2sGuadalajara%2C%20Jal.!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <!-- Horarios -->
+            <div class="card">
+                <h2><i class="fas fa-clock"></i> Horarios de atención</h2>
+                <ul class="horarios-list">
+                    <li><span class="dia">Lunes a Viernes</span><span class="hora">9:00 AM – 8:00 PM</span></li>
+                    <li><span class="dia">Sábados</span><span class="hora">9:00 AM – 2:00 PM</span></li>
+                    <li><span class="dia">Domingos</span><span class="cerrado">Cerrado</span></li>
+                </ul>
+            </div>
+
+            <!-- Testimonios -->
+            <div class="card full-width">
+                <h2><i class="fas fa-comment-dots"></i> Lo que dicen nuestros pacientes</h2>
+                <div class="testimonios-grid">
+                    <div class="testimonio-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Excelente servicio. Me dieron mucha confianza, no sentí dolor en mi tratamiento de limpieza."</p>
+                        <span class="paciente-nombre">Laura R.</span>
+                    </div>
+                    <div class="testimonio-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Muy profesionales y puntuales con los horarios. El consultorio está impecable."</p>
+                        <span class="paciente-nombre">Carlos M.</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Asistente virtual -->
+    <div id="chat-widget">
+        <div class="bot-card-widget" onclick="toggleChat()">
+            <div class="bot-card-avatar">
+                <i class="fas fa-headset"></i>
+                <span class="status-dot"></span>
+            </div>
+            <div class="bot-card-text">
+                <strong>Asistente Dental Virtual</strong>
+                <span>Resuelve tus dudas aquí</span>
+            </div>
+        </div>
+
+        <div id="chat-box">
+            <div id="chat-header">
+                <span><i class="fas fa-headset"></i> Asistente Dental Virtual</span>
+                <button onclick="toggleChat()" style="background:none; border:none; color:white; font-size:16px; cursor:pointer;">✕</button>
+            </div>
+            <div id="chat-messages">
+                <div class="msg msg-bot">
+                    ¡Hola! Soy el Asistente Dental Virtual del Dr. Arreola. ¿Tienes dudas sobre nuestros servicios, ubicación o deseas pedir informes?
+                </div>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="user-input" placeholder="Escribe tu duda aquí..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Consultorio Dental Guadalajara</strong></p>
+        <p>Atención odontológica profesional · Guadalajara, Jalisco</p>
+        <p style="font-size: 11.5px; opacity: .6; margin-top: 12px;">© 2026 Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Botón WhatsApp -->
+    <a href="https://wa.me/523300000000?text=Hola,%20quisiera%20pedir%20informes%20o%20agendar%20una%20cita" target="_blank" class="btn-whatsapp">
+        <i class="fab fa-whatsapp" style="font-size: 20px;"></i>
+        <span>Agendar por WhatsApp</span>
+    </a>
+
+    <script>
+        function toggleChat() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesDiv = document.getElementById('chat-messages');
+
+            messagesDiv.innerHTML += `<div class="msg msg-user">${message}</div>`;
+            input.value = '';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            const loadingId = 'loading-' + Date.now();
+            messagesDiv.innerHTML += `<div class="msg msg-bot" id="${loadingId}">Escribiendo...</div>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+                messagesDiv.innerHTML += `<div class="msg msg-bot">${data.response}</div>`;
+            } catch (err) {
+                document.getElementById(loadingId).remove();
+                messagesDiv.innerHTML += `<div class="msg msg-bot">Ocurrió un detalle de conexión. Reintenta por favor.</div>`;
+            }
+
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>
