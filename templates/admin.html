@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Citas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; background: #f7f6f2; padding: 20px; color: #1f2937; margin: 0; }
+        .container { max-width: 1040px; margin: 20px auto; background: #fff; padding: 30px; border-radius: 6px; border: 1px solid #e3e0d8; border-top: 3px solid #b08d57; box-shadow: 0 12px 28px rgba(11,37,69,.07); }
+        h1 { font-family: 'Cormorant Garamond', Georgia, serif; color: #0b2545; font-size: 27px; font-weight: 700; margin: 0 0 22px; padding-bottom: 14px; border-bottom: 1px solid #e3e0d8; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 720px; }
+        th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid #ece9e1; font-size: 14px; vertical-align: middle; }
+        th { background: #0b2545; color: #fff; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        tbody tr:hover { background: #faf9f6; }
+
+        .badge { padding: 5px 12px; border-radius: 3px; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
+        .badge-pendiente { background: #fbf3df; color: #8a5a0b; border: 1px solid #ecd9a4; }
+        .badge-atendido { background: #e7f3ea; color: #1f6b3b; border: 1px solid #b7d8c0; }
+
+        .btn-delete, .btn-logout { background: #fff; color: #9a2a2a; border: 1px solid #e0b4b4; padding: 7px 14px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: 600; transition: all .2s; font-family: 'Inter', sans-serif; }
+        .btn-delete:hover, .btn-logout:hover { background: #9a2a2a; color: #fff; border-color: #9a2a2a; }
+        .btn-back { display: inline-block; margin-top: 24px; color: #0b2545; text-decoration: none; font-weight: 600; font-size: 13.5px; border-bottom: 1px solid #b08d57; padding-bottom: 2px; }
+        .btn-back:hover { color: #b08d57; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span>🔒 Panel de administración · Citas</span>
+            <a href="/logout" class="btn-logout">Cerrar sesión</a>
+        </h1>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha / Hora recepción</th>
+                        <th>Paciente</th>
+                        <th>Servicio</th>
+                        <th>Teléfono / WhatsApp</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sol in solicitudes %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td style="color: #5b6676; font-size: 13px;">🕒 {{ sol.fecha_registro if sol.fecha_registro else 'Sin Fecha' }}</td>
+                        <td><strong>{{ sol.paciente }}</strong></td>
+                        <td>{{ sol.servicio }}</td>
+                        <td><a href="https://wa.me/52{{ sol.telefono }}" target="_blank" style="color: #1f8a4c; font-weight: 600; text-decoration: none;">💬 {{ sol.telefono }}</a></td>
+                        <td>
+                            <a href="/cambiar_estado/{{ sol.id }}" class="badge {% if sol.estado == 'Atendido' %}badge-atendido{% else %}badge-pendiente{% endif %}">
+                                {% if sol.estado == 'Atendido' %}✓ Atendido{% else %}⏳ Pendiente{% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/eliminar_cita/{{ sol.id }}" class="btn-delete" onclick="return confirm('¿Seguro que deseas eliminar esta cita?');">Borrar</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #8a94a3; padding: 28px;">No hay solicitudes registradas aún.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="/" class="btn-back">← Volver a la página principal</a>
+    </div>
+</body>
+</html>
